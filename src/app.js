@@ -130,7 +130,8 @@ function operate(button) {
         num1 = forNum;
         inputDisplay.textContent = theArray;
         resultBtn.disabled = false;
-    } else if ((button.id.match('operator') && operator1 && !operator2 || (button.id.match('equals') && operator1 && !operator2))) {
+    } else if ((button.id.match('operator') && operator1 && !operator2 ||
+            (button.id.match('equals') && operator1 && !operator2))) {
         operator2 = value;
         forNum = theArray.slice(0, -1);
         theArray = '';
@@ -156,8 +157,11 @@ function operate(button) {
             divide(num1, num2);
         }
     }
+}
 
-    // solo para checar BORRAR LUEGO
+buttons.forEach(button => button.addEventListener('click', () => operate(button)));
+
+/*
     console.log('num1:' + num1);
     console.log('num2:' + num2);
     console.log('input array:' + inputArray);
@@ -165,14 +169,6 @@ function operate(button) {
     console.log('operator2:' + operator2)
     console.log('the array:' + theArray);
     console.log('operator array:' +  checkOperatorsArray);
-}
-
-buttons.forEach(button => button.addEventListener('click', () => operate(button)));
-
-/*
-checar el operador por tercera vez
-el 0 antes
-add keyboard support
 */
 
 // clave para el keyboard support
