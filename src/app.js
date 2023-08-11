@@ -159,3 +159,11 @@ checar el operador por tercera vez
 el 0 antes
 add keyboard support
 */
+
+// clave para el keyboard support
+document.addEventListener('keyup', (event) => {
+    var name = event.key;
+    var code = event.code;
+    // Alert the key name and key code on keydown
+    alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+  }, false);
