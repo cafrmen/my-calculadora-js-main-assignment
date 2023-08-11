@@ -9,6 +9,7 @@ const dot = document.querySelector('.dot');
 let operator1 = '';
 let operator2 = '';
 let inputArray = [];
+let checkOperatorsArray = [];
 let num1 = '';
 let num2 = '';
 let result = '';
@@ -22,6 +23,7 @@ function defaultValues() {
     num2 = '';
     result = '';
     resultBtn.disabled = true;
+    operatorType.textContent = 'Press AC button or type a new operation';
 }
 
 // operation functions
@@ -88,6 +90,7 @@ function clearButton() {
     result = '';
     resultBtn.disabled = true;
     inputDisplay.textContent = '';
+    buttons.disabled = false;
 }
 function eraseButton() {
     inputArray.pop();
@@ -98,6 +101,7 @@ function operate(button) {
     let forNum = 0;
     let value = button.textContent;
     inputArray.push(value);
+    checkOperatorsArray.push(value);
 
     if (value === 'AC' || (value === '=' && !operator1)) {
         clearButton();
@@ -107,8 +111,18 @@ function operate(button) {
 
     let theArray = inputArray.join('');
     inputDisplay.textContent = theArray;
+    console.log('typeof:' + theArray.slice(-1))
 
-    if (button.id.match('operator') && operator1 === '') {
+    if (button.id.match('operator') &&
+            (checkOperatorsArray[checkOperatorsArray.length - 2] == '+' ||
+            checkOperatorsArray[checkOperatorsArray.length - 2] == '-' ||
+            checkOperatorsArray[checkOperatorsArray.length - 2] == '*' ||
+            checkOperatorsArray[checkOperatorsArray.length - 2] == '/' ||
+            checkOperatorsArray[checkOperatorsArray.length - 2] == '=' ||
+            checkOperatorsArray[checkOperatorsArray.length - 2] == undefined)) {
+        operatorType.textContent = 'Type a valid operation';
+        clearButton();
+    } else if (button.id.match('operator') && operator1 === '') {
         operator1 = value;
         forNum = theArray.slice(0, -1);
         theArray = '';
@@ -146,10 +160,11 @@ function operate(button) {
     // solo para checar BORRAR LUEGO
     console.log('num1:' + num1);
     console.log('num2:' + num2);
-    console.log('input array:' + inputArray)
+    console.log('input array:' + inputArray);
     console.log('operator1:' + operator1);
     console.log('operator2:' + operator2)
-    console.log('the array:' + theArray); // need to separate values
+    console.log('the array:' + theArray);
+    console.log('operator array:' +  checkOperatorsArray);
 }
 
 buttons.forEach(button => button.addEventListener('click', () => operate(button)));
