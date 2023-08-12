@@ -169,7 +169,7 @@ function operate(button) {
 buttons.forEach(button => button.addEventListener('click', () => operate(button)));
 
 // clave para el keyboard support
-document.addEventListener('keyup', (event) => {
+document.addEventListener('keydown', (event) => {
     let name = event.key;
 
     if (name === 'Backspace') {
