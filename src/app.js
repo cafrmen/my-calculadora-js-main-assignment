@@ -100,6 +100,7 @@ function eraseButton() {
 function operate(button) {
     let forNum = 0;
     let value = button.textContent;
+
     inputArray.push(value);
     checkOperatorsArray.push(value);
 
@@ -111,7 +112,6 @@ function operate(button) {
 
     let theArray = inputArray.join('');
     inputDisplay.textContent = theArray;
-    console.log('typeof:' + theArray.slice(-1))
 
     if (button.id.match('operator') &&
             (checkOperatorsArray[checkOperatorsArray.length - 2] == '+' ||
@@ -157,9 +157,30 @@ function operate(button) {
             divide(num1, num2);
         }
     }
+    console.log('num1:' + num1);
+    console.log('num2:' + num2);
+    console.log('input array:' + inputArray);
+    console.log('operator1:' + operator1);
+    console.log('operator2:' + operator2)
+    console.log('the array:' + theArray);
+    console.log('operator array:' +  checkOperatorsArray);
 }
 
 buttons.forEach(button => button.addEventListener('click', () => operate(button)));
+
+// clave para el keyboard support
+document.addEventListener('keyup', (event) => {
+    let name = event.key;
+
+    if (name === 'Backspace') {
+        clearButton();
+    } else {
+        operatorType.textContent = `Tab or Shift+Tab to select a button.
+                                    Enter to activate the button.
+                                    Delete in keboard to clear the screen.`
+    }
+    //alert(`Key pressed: ${name}`);
+  }, false);
 
 /*
     console.log('num1:' + num1);
@@ -170,11 +191,3 @@ buttons.forEach(button => button.addEventListener('click', () => operate(button)
     console.log('the array:' + theArray);
     console.log('operator array:' +  checkOperatorsArray);
 */
-
-// clave para el keyboard support
-document.addEventListener('keyup', (event) => {
-    var name = event.key;
-    var code = event.code;
-    // Alert the key name and key code on keydown
-    alert(`Key pressed: ${name} \r\n Key code value: ${code}`);
-  }, false);
