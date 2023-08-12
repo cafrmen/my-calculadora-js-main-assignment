@@ -175,9 +175,8 @@ document.addEventListener('keyup', (event) => {
     if (name === 'Backspace') {
         clearButton();
     } else {
-        operatorType.textContent = `Tab or Shift+Tab to select a button.
-                                    Enter to activate the button.
-                                    Delete in keboard to clear the screen.`
+        operatorType.textContent = `Tab + Enter or Shift+Tab + Enter to select a button.
+                                    Delete to clear the screen.`
     }
     //alert(`Key pressed: ${name}`);
   }, false);
