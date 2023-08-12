@@ -19,6 +19,7 @@ function defaultValues() {
     operator1 = '';
     operator2 = '';
     inputArray = [];
+    checkOperatorsArray = [];
     num1 = '';
     num2 = '';
     result = '';
@@ -64,7 +65,7 @@ const multiply = (a, b) => {
 }
 
 const divide = (a, b) => {
-    if (b === '0') {
+    if (Math.abs(b) === 0) {
         operatorType.textContent = 'You can\'t divide by 0 ... press AC button.';
         clearButton();
     } else {
@@ -85,6 +86,7 @@ function clearButton() {
     operator1 = '';
     operator2 = '';
     inputArray = [];
+    checkOperatorsArray = [];
     num1 = '';
     num2 = '';
     result = '';
@@ -157,13 +159,6 @@ function operate(button) {
             divide(num1, num2);
         }
     }
-    console.log('num1:' + num1);
-    console.log('num2:' + num2);
-    console.log('input array:' + inputArray);
-    console.log('operator1:' + operator1);
-    console.log('operator2:' + operator2)
-    console.log('the array:' + theArray);
-    console.log('operator array:' +  checkOperatorsArray);
 }
 
 buttons.forEach(button => button.addEventListener('click', () => operate(button)));
