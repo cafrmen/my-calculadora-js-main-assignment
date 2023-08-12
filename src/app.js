@@ -214,13 +214,16 @@ document.addEventListener('keydown', (event) => {
         operate(pressButton);
     } else if (name === 'Enter') {
         pressButton = document.querySelector('#equals');
+        document.body.style.backgroundColor = `${rndColor[Math.floor(Math.random() * 2)]}`;
         operate(pressButton);
     } else if (name === 'Backspace') {
         clearButton();
     } else {
         operatorType.textContent = 'Please type a valid operation in your keyboard'
     } //alert(`key pressed: ${name}`)
-  }, false);
+}, false);
+
+let rndColor = ['rgb(0, 53, 69)', 'rgb(29, 92, 99)']
 
 /*
 Para checar
