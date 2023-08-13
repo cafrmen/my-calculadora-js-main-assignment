@@ -1,4 +1,4 @@
-Vidit here:
+Visit here:
 https://cafrmen.github.io/my-calculadora-js-main-assignment/ 
 
 The second calculator I made. No libraries and pure Vanilla JS!
