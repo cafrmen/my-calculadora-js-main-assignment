@@ -99,6 +99,7 @@ function eraseButton() {
 
 function operate(button) {
     let value = button.textContent;
+    resultBtn.disabled = true;
 
     if (value === 'AC' || (value === '=' && !operator1)) {
         clearButton();
