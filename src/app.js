@@ -21,7 +21,7 @@ function defaultValues() {
 
 // operation functions
 const add = (a, b) => {
-    result = Number(a) + Number(b);
+    result = (Number(a) + Number(b)).toFixed(2);
     num1 = result;
     num2 = '';
     operator1 = operator2;
@@ -33,7 +33,7 @@ const add = (a, b) => {
 }
 
 const substract = (a, b) => {
-    result = Number(a) - Number(b);
+    result = (Number(a) - Number(b)).toFixed(2);
     num1 = result;
     num2 = '';
     operator1 = operator2;
@@ -45,7 +45,7 @@ const substract = (a, b) => {
 }
 
 const multiply = (a, b) => {
-    result = Number(a) * Number(b);
+    result =(Number(a) * Number(b)).toFixed(2);
     num1 = result;
     num2 = '';
     operator1 = operator2;
