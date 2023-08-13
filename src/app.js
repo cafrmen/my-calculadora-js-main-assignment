@@ -109,13 +109,23 @@ function operate(button) {
         operatorType.textContent = 'First write a number';
         inputDisplay.textContent = '';
     } else if (button.id.match('num') && !operator1 && !num2) {
-        num1 += value;
-        inputDisplay.textContent = num1;
+        if (value === '.' && num1.includes('.')) {
+            operatorType.textContent = 'Your number already has a dot';
+            num1 = num1;
+        } else {
+            num1 += value;
+            inputDisplay.textContent = num1;
+        }
     } else if (button.id.match('operator') && !num2) {
         operator1 = value;
     } else if (button.id.match('num') && num1 && operator1) {
-        num2 += value;
-        inputDisplay.textContent = num2;
+        if (value === '.' && num2.includes('.')) {
+            operatorType.textContent = 'Your number already has a dot';
+            num2 = num2;
+        } else {
+            num2 += value;
+            inputDisplay.textContent = num2;
+        }
         resultBtn.disabled = false;
     } else if ((button.id.match('operator') || button.id.match('equals')) && num1 && operator1 && num2) {
         operator2 = value;
@@ -186,7 +196,6 @@ document.addEventListener('keydown', (e) => {
         operate(pressButton);
     } else if (name === 'Enter') {
         pressButton = document.querySelector('#equals');
-        document.body.style.backgroundColor = `${rndColor[Math.floor(Math.random() * 2)]}`;
         operate(pressButton);
     } else if (name === 'Backspace') {
         clearButton();
@@ -194,5 +203,3 @@ document.addEventListener('keydown', (e) => {
         operatorType.textContent = 'Type a valid operation in your keyboard'
     } //alert(`key pressed: ${name}`)
 }, false);
-
-let rndColor = ['rgb(0, 53, 69)', 'rgb(29, 92, 99)'];
