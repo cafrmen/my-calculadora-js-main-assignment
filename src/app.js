@@ -1,6 +1,6 @@
 const buttons = document.querySelectorAll('button');
 const inputDisplay = document.querySelector('.screen');
-const operatorType = document.querySelector('.operatorClass'); // por si se pone info
+const operatorType = document.querySelector('.operatorClass');
 const clearBtn = document.querySelector('#clear');
 const deleteBtn = document.querySelector('#erase');
 const resultBtn = document.querySelector('#equals');
@@ -8,28 +8,20 @@ const dot = document.querySelector('.dot');
 // ¡¡¡variables importantes!!!
 let operator1 = '';
 let operator2 = '';
-let inputArray = [];
-let checkOperatorsArray = [];
 let num1 = '';
 let num2 = '';
 let result = '';
 resultBtn.disabled = true;
+operatorType.textContent = 'Welcome, try to break this calculator';
 
 function defaultValues() {
     operator1 = '';
-    operator2 = '';
-    inputArray = [];
-    checkOperatorsArray = [];
-    num1 = '';
-    num2 = '';
-    result = '';
     resultBtn.disabled = true;
-    operatorType.textContent = 'Press AC button or type a new operation';
 }
 
 // operation functions
 const add = (a, b) => {
-    result = (Number(a) + Number(b)).toFixed(2);
+    result = Number(a) + Number(b);
     num1 = result;
     num2 = '';
     operator1 = operator2;
@@ -41,7 +33,7 @@ const add = (a, b) => {
 }
 
 const substract = (a, b) => {
-    result = (Number(a) - Number(b)).toFixed(2);
+    result = Number(a) - Number(b);
     num1 = result;
     num2 = '';
     operator1 = operator2;
@@ -53,7 +45,7 @@ const substract = (a, b) => {
 }
 
 const multiply = (a, b) => {
-    result = (Number(a) * Number(b)).toFixed(2);
+    result = Number(a) * Number(b);
     num1 = result;
     num2 = '';
     operator1 = operator2;
@@ -66,7 +58,7 @@ const multiply = (a, b) => {
 
 const divide = (a, b) => {
     if (Math.abs(b) === 0) {
-        operatorType.textContent = 'You can\'t divide by 0 ... press AC button.';
+        operatorType.textContent = 'You can\'t divide by 0';
         clearButton();
     } else {
         result = (Number(a) / Number(b)).toFixed(2);
@@ -85,67 +77,47 @@ const divide = (a, b) => {
 function clearButton() {
     operator1 = '';
     operator2 = '';
-    inputArray = [];
-    checkOperatorsArray = [];
     num1 = '';
     num2 = '';
     result = '';
     resultBtn.disabled = true;
     inputDisplay.textContent = '';
-    buttons.disabled = false;
 }
+
 function eraseButton() {
-    inputArray.pop();
-    inputArray.pop();
+    let eraseOne = [];
+    if (num1 && !operator1 && !num2) {
+        eraseOne = (''+num1).slice(0, -1);
+        num1 = eraseOne;
+        inputDisplay.textContent = num1;
+    } else if (num1 && operator1 && num2) {
+        eraseOne = (''+num2).slice(0, -1);
+        num2 = eraseOne;
+        inputDisplay.textContent = num2;
+    }
 }
 
 function operate(button) {
-    let forNum = 0;
     let value = button.textContent;
-
-    inputArray.push(value);
-    checkOperatorsArray.push(value);
 
     if (value === 'AC' || (value === '=' && !operator1)) {
         clearButton();
     } else if (value === '↼') {
        eraseButton();
-    }
-
-    let theArray = inputArray.join('');
-    inputDisplay.textContent = theArray;
-
-    if (button.id.match('operator') &&
-            (checkOperatorsArray[checkOperatorsArray.length - 2] == '+' ||
-            checkOperatorsArray[checkOperatorsArray.length - 2] == '-' ||
-            checkOperatorsArray[checkOperatorsArray.length - 2] == '*' ||
-            checkOperatorsArray[checkOperatorsArray.length - 2] == '/' ||
-            checkOperatorsArray[checkOperatorsArray.length - 2] == '=' ||
-            checkOperatorsArray[checkOperatorsArray.length - 2] == undefined)) {
-        operatorType.textContent = 'Type a valid operation';
-        clearButton();
-    } else if (button.id.match('operator') && operator1 === '') {
+    } else if (button.id.match('operator') && !num1) {
+        operatorType.textContent = 'First write a number';
+        inputDisplay.textContent = '';
+    } else if (button.id.match('num') && !operator1 && !num2) {
+        num1 += value;
+        inputDisplay.textContent = num1;
+    } else if (button.id.match('operator') && !num2) {
         operator1 = value;
-        forNum = theArray.slice(0, -1);
-        theArray = '';
-        inputArray = [];
-        num1 = forNum;
-        inputDisplay.textContent = theArray;
+    } else if (button.id.match('num') && num1 && operator1) {
+        num2 += value;
+        inputDisplay.textContent = num2;
         resultBtn.disabled = false;
-    } else if ((button.id.match('operator') && operator1 && !operator2 ||
-            (button.id.match('equals') && operator1 && !operator2))) {
+    } else if ((button.id.match('operator') || button.id.match('equals')) && num1 && operator1 && num2) {
         operator2 = value;
-        forNum = theArray.slice(0, -1);
-        theArray = '';
-        inputArray = [];
-        num2 = forNum;
-        inputDisplay.textContent = theArray;
-    } else if (theArray.includes('.')) {
-        dot.disabled = true;
-        operatorType.textContent = 'Your number already has a dot.';
-    } else if (!theArray.includes('.')) {
-        dot.disabled = false;
-        operatorType.textContent = '';
     }
 
     if (operator1 && operator2 && num1 && num2) {
@@ -160,12 +132,11 @@ function operate(button) {
         }
     }
 }
-
 buttons.forEach(button => button.addEventListener('click', () => operate(button)));
 
-// clave para el keyboard support
-document.addEventListener('keydown', (event) => {
-    let name = event.key;
+// keyboard support
+document.addEventListener('keydown', (e) => {
+    let name = e.key;
     let pressButton;
     if (name === '9') {
         pressButton = document.querySelector('.nine');
@@ -219,19 +190,8 @@ document.addEventListener('keydown', (event) => {
     } else if (name === 'Backspace') {
         clearButton();
     } else {
-        operatorType.textContent = 'Please type a valid operation in your keyboard'
+        operatorType.textContent = 'Type a valid operation in your keyboard'
     } //alert(`key pressed: ${name}`)
 }, false);
 
-let rndColor = ['rgb(0, 53, 69)', 'rgb(29, 92, 99)']
-
-/*
-Para checar
-    console.log('num1:' + num1);
-    console.log('num2:' + num2);
-    console.log('input array:' + inputArray);
-    console.log('operator1:' + operator1);
-    console.log('operator2:' + operator2)
-    console.log('the array:' + theArray);
-    console.log('operator array:' +  checkOperatorsArray);
-*/
+let rndColor = ['rgb(0, 53, 69)', 'rgb(29, 92, 99)'];
