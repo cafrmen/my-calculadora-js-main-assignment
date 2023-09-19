@@ -5,7 +5,8 @@ const clearBtn = document.querySelector('#clear');
 const deleteBtn = document.querySelector('#erase');
 const resultBtn = document.querySelector('#equals');
 const dot = document.querySelector('.dot');
-// ¡¡¡variables importantes!!!
+
+// important variables
 let operator1 = '';
 let operator2 = '';
 let num1 = '';
@@ -73,7 +74,7 @@ const divide = (a, b) => {
     }
 }
 
-// botones de ac y borrar un dígito
+// ac & erase button
 function clearButton() {
     operator1 = '';
     operator2 = '';
